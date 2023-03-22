@@ -8,6 +8,7 @@ await esbuild.build({
   platform: 'node',
   target: 'node18',
   packages: 'external',
+  sourcemap: true,
   plugins: [
     copy({
       resolveFrom: 'cwd',

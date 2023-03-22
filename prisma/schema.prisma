@@ -20,6 +20,8 @@ model Contact {
   updatedAt         DateTime @db.Timestamp(6)
   ownerId           Int
   User              User     @relation(fields: [ownerId], references: [id])
+
+  @@unique([email , ownerId])
 }
 
 model Import {
@@ -46,7 +48,7 @@ model Log {
 
 model User {
   id       Int       @id @default(autoincrement())
-  username String    @db.VarChar
+  username String    @db.VarChar @unique
   password String    @db.VarChar
   Contact  Contact[]
   Import   Import[]
