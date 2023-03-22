@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Contact {
+  id                Int      @id @default(autoincrement())
+  name              String   @db.VarChar
+  dateOfBirth       DateTime @db.Date
+  phone             String   @db.VarChar
+  address           String   @db.VarChar
+  creditCardNumber  String   @db.VarChar
+  credirCardNetwork String   @db.VarChar
+  email             String   @db.VarChar
+  createdAt         DateTime @db.Timestamp(6)
+  updatedAt         DateTime @db.Timestamp(6)
+  ownerId           Int
+  User              User     @relation(fields: [ownerId], references: [id])
+}
+
+model Import {
+  id        Int      @id @default(autoincrement())
+  filePath  String   @db.VarChar
+  status    String   @db.VarChar
+  createdAt DateTime @db.Timestamp(6)
+  userId    Int
+  Log       Log[]
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+model Log {
+  id        Int      @id @default(autoincrement())
+  importId  Int
+  ownerId   Int
+  rowData   Json     @db.Json
+  rowNumber Int
+  error     String   @db.VarChar
+  createdAt DateTime @db.Timestamp(6)
+  Import    Import   @relation(fields: [importId], references: [id])
+  User      User     @relation(fields: [ownerId], references: [id])
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  username String    @db.VarChar
+  password String    @db.VarChar
+  Contact  Contact[]
+  Import   Import[]
+  Log      Log[]
+}
