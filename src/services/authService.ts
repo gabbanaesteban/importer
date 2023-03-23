@@ -1,35 +1,37 @@
 import { comparePassword, hashPassword } from "../utils/helpers"
-import { PrismaClient } from "@prisma/client"
-import createError from "http-errors"
+import { NotFound, Unauthorized, Conflict } from "http-errors"
+import { injectable } from "inversify"
+import prisma from "../db"
 
-const prisma = new PrismaClient()
+@injectable()
+export class AuthService {
+  async register(username: string, password: string) {
+    const foundUser = await prisma.user.findUnique({ where: { username } })
 
-export async function register(username: string, password: string) {
-  const foundUser = await prisma.user.findUnique({ where: { username } })
+    if (foundUser) {
+      throw new Conflict("User already exists")
+    }
 
-  if (foundUser) {
-    throw new createError.Conflict("User already exists")
+    const hashedPassword = await hashPassword(password)
+
+    await prisma.user.create({
+      data: { username, password: hashedPassword },
+    })
   }
 
-  const hashedPassword = await hashPassword(password)
+  async login(username: string, password: string) {
+    const foundUser = await prisma.user.findUnique({ where: { username } })
 
-  await prisma.user.create({
-    data: { username, password: hashedPassword },
-  })
-}
+    if (!foundUser) {
+      throw new NotFound("User does not exist")
+    }
 
-export async function login(username: string, password: string) {
-  const foundUser = await prisma.user.findUnique({ where: { username } })
+    const isPasswordCorrect = await comparePassword(password, foundUser.password)
 
-  if (!foundUser) {
-    throw new createError.NotFound("User does not exist")
+    if (!isPasswordCorrect) {
+      throw new Unauthorized("Incorrect password")
+    }
+
+    return foundUser
   }
-
-  const isPasswordCorrect = await comparePassword(password, foundUser.password)
-
-  if (!isPasswordCorrect) {
-    throw new createError.Unauthorized("Incorrect password")
-  }
-
-  return foundUser
 }

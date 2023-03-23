@@ -19,6 +19,7 @@ CREATE TABLE "Contact" (
 CREATE TABLE "Import" (
     "id" SERIAL NOT NULL,
     "filePath" VARCHAR NOT NULL,
+    "mapping" JSON NOT NULL,
     "status" VARCHAR NOT NULL,
     "createdAt" TIMESTAMP(6) NOT NULL,
     "userId" INTEGER NOT NULL,

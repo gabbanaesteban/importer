@@ -14,19 +14,21 @@ model Contact {
   phone             String   @db.VarChar
   address           String   @db.VarChar
   creditCardNumber  String   @db.VarChar
-  credirCardNetwork String   @db.VarChar
+  creditCardNetwork String   @db.VarChar
+  creditCardLast4   String   @db.VarChar
   email             String   @db.VarChar
   createdAt         DateTime @db.Timestamp(6)
   updatedAt         DateTime @db.Timestamp(6)
   ownerId           Int
   User              User     @relation(fields: [ownerId], references: [id])
 
-  @@unique([email , ownerId])
+  @@unique([email , ownerId], name: "email_ownerId")
 }
 
 model Import {
   id        Int      @id @default(autoincrement())
   filePath  String   @db.VarChar
+  mapping   Json     @db.Json
   status    String   @db.VarChar
   createdAt DateTime @db.Timestamp(6)
   userId    Int

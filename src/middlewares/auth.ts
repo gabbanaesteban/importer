@@ -1,6 +1,8 @@
 import { User } from "@prisma/client";
 import { NextFunction, Response, Request } from "express";
 import { Session, SessionData } from 'express-session';
+import container from "../IoC/inversify.config";
+import { CURRENT_USER } from "../IoC/types";
 
 declare module 'express' {
   export interface Request {
@@ -9,5 +11,10 @@ declare module 'express' {
 }
 
 export async function sessionChecker( req: Request, res: Response, next: NextFunction) {
-  return req.session.user ? next() : res.redirect('/login');
+  if (req.session.user) {
+    container.rebind(CURRENT_USER).toConstantValue(req.session.user);
+    return next();
+  }
+  
+  return res.redirect('/login');
 }

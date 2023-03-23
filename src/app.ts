@@ -11,11 +11,12 @@ app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, "views"))
 // hbs.registerPartials(path.join(__dirname, 'views', 'partials'))
 
+// development ;)
 const sessionConfig = {
-  secret: "secret", // TODO: Change this to a random string
+  secret: "secret",
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }, // TODO: Change this to true when using HTTPS
+  cookie: { secure: false },
 }
 
 app.use(session(sessionConfig))
