@@ -1,10 +1,33 @@
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>{{ data.title }}</title>
-  </head>
-  <body>
-    <h1>Welcome to my site!</h1>
-    <p>This is the home page and the title is {{ data.title }}.</p>
-  </body>
-</html>
+<main>
+  <div class="p-3 pb-md-4 mx-auto">
+    <h1 class="display-4 fw-normal">Your contacts</h1>
+    <p class="fs-5 text-muted">List of contacts successfully imported.</p>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table text-center">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Date of Birth</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Credit Card Number</th>
+          <th>Credit Card Network</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Esteban</td>
+          <td>esteban@email.com</td>
+          <td>Jan 10, 1995</td>
+          <td>+1 (000) 123-4567</td>
+          <td>NORTH 123, Street St. No. 123, 111-333333, FL, US</td>
+          <td>**** **** **** 1234</td>
+          <td>Visa</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>

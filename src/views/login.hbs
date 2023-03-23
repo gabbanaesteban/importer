@@ -1,14 +1,17 @@
-<h1>Sign in</h1>
-<form id="signup" action="/register"></form>
-<form action="/login/password" method="post">
-  <section>
-    <label for="username">Username</label>
-    <input id="username" name="username" type="text" autocomplete="username" required autofocus />
-  </section>
-  <section>
-    <label for="current-password">Password</label>
-    <input id="current-password" name="password" type="password" autocomplete="current-password" required />
-  </section>
-  <button type="submit">Sign in</button>
-  <button type="submit" form="signup">Sign up</button>
-</form>
+<div class="auth text-center">
+  <main class="form-auth w-100 m-auto">
+    <form data-bitwarden-watching="1" action="login/password" method="post">
+      <h1 class="h3 mb-3 fw-normal">Sign in</h1>
+      <div class="form-floating">
+        <input type="text" id="floatingInput" name="username" class="form-control" placeholder="koombea" required />
+        <label for="floatingInput">Username</label>
+      </div>
+      <div class="form-floating">
+        <input type="password" id="floatingPassword" name="password" class="form-control" placeholder="Password" required />
+        <label for="floatingPassword">Password</label>
+      </div>
+      <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+      <p></p><a href="/register">Don't have an account?</a></p>
+    </form>
+  </main>
+</div>

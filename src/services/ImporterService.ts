@@ -1,13 +1,17 @@
+import { setTimeout } from 'timers/promises';
 import { Import } from "@prisma/client"
-import { contactPayloadType, ImportStatus } from "../types"
+import { ContactPayloadType, ImportStatus } from "../types"
 import csv from "csv-parser"
 import { createReadStream } from "fs"
 import prisma from "../db"
 import { contactSchema } from "../schemas/importSchemas"
 import creditCardType from "credit-card-type"
+import { encrypt } from "../utils/crypto"
 
-export default class ImporterWorker {
+export default class ImporterService {
   private importedFile: Import
+  private successRowsCount: number = 0
+  private failedRowsCount: number = 0
 
   constructor(importedFile: Import) {
     this.importedFile = importedFile
@@ -26,15 +30,26 @@ export default class ImporterWorker {
     }
 
     await prisma.import.update({
-      where: {
-        id: this.importedFile.id,
-      },
-      data: {
-        status: ImportStatus.PROCESSING,
-      },
+      where: { id: this.importedFile.id },
+      data: { status: ImportStatus.PROCESSING },
     })
 
+    // Lets wait for 5 seconds to simulate a long running job
+    await setTimeout(5000)
+
     await this.processFile()
+
+    if (this.failedRowsCount > 0 && this.successRowsCount === 0) {
+      await prisma.import.update({
+        where: { id: this.importedFile.id },
+        data: { status: ImportStatus.FAILED },
+      })
+    } else {
+      await prisma.import.update({
+        where: { id: this.importedFile.id },
+        data: { status: ImportStatus.FINISHED },
+      })
+    }
   }
 
   async processFile() {
@@ -55,8 +70,10 @@ export default class ImporterWorker {
 
     const parser = csv({ mapHeaders })
 
-    return new Promise<void>((resolve, reject) => {
-      let rowCount = 1
+    await new Promise<void>((resolve, reject) => {
+      let rowNumber = 1 // The number of the row, in order to look for failed contacts in the file
+      let rowsLoadedCount = 0
+      let rowsProcessedCount = 0
 
       const readStream = createReadStream(this.importedFile.filePath)
 
@@ -64,15 +81,20 @@ export default class ImporterWorker {
         reject(error)
       })
 
-      readStream
-        .pipe(parser)
-        .on("data", async (row) => {
-          rowCount++
-          await this.processRow(row, rowCount)
-        })
-        .on("end", () => {
+      readStream.pipe(parser).on("data", async (row) => {
+        rowNumber++
+
+        // I need to know when all rows are processed
+        // This is a bit hacky, but Im running out of time
+        // Could be improved
+        rowsLoadedCount++
+        await this.processRow(row, rowNumber)
+        rowsProcessedCount++
+
+        if (rowsLoadedCount === rowsProcessedCount) {
           resolve()
-        })
+        }
+      })
     })
   }
 
@@ -89,7 +111,7 @@ export default class ImporterWorker {
     await this.createOrUpdateContact(result.data)
   }
 
-  async createOrUpdateContact(contact: contactPayloadType) {
+  async createOrUpdateContact(contact: ContactPayloadType) {
     const creditCardNetwork = creditCardType(contact.credit_card_number)[0].niceType
     const lastFourDigits = contact.credit_card_number.slice(-4)
 
@@ -98,7 +120,7 @@ export default class ImporterWorker {
       dateOfBirth: contact.date_of_birth,
       phone: contact.phone,
       address: contact.address,
-      creditCardNumber: contact.credit_card_number,
+      creditCardNumber: encrypt(contact.credit_card_number),
       creditCardNetwork,
       creditCardLast4: lastFourDigits,
       updatedAt: new Date(),
@@ -115,6 +137,8 @@ export default class ImporterWorker {
           ownerId: this.importedFile.userId,
         },
       })
+
+      this.successRowsCount++
     } catch (error) {
       console.error(error)
     }
@@ -132,6 +156,8 @@ export default class ImporterWorker {
           createdAt: new Date(),
         },
       })
+
+      this.failedRowsCount++
     } catch (error) {
       console.error(error)
     }

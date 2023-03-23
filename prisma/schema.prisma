@@ -22,18 +22,18 @@ model Contact {
   ownerId           Int
   User              User     @relation(fields: [ownerId], references: [id])
 
-  @@unique([email , ownerId], name: "email_ownerId")
+  @@unique([email, ownerId], name: "email_ownerId")
 }
 
 model Import {
-  id        Int      @id @default(autoincrement())
-  filePath  String   @db.VarChar
-  mapping   Json     @db.Json
-  status    String   @db.VarChar
-  createdAt DateTime @db.Timestamp(6)
-  userId    Int
-  Log       Log[]
-  User      User     @relation(fields: [userId], references: [id])
+  id           Int      @id @default(autoincrement())
+  filePath     String   @db.VarChar
+  mapping      Json     @db.Json
+  status       String   @db.VarChar
+  userId       Int
+  Log          Log[]
+  User         User     @relation(fields: [userId], references: [id])
+  createdAt    DateTime @db.Timestamp(6)
 }
 
 model Log {
@@ -50,7 +50,7 @@ model Log {
 
 model User {
   id       Int       @id @default(autoincrement())
-  username String    @db.VarChar @unique
+  username String    @unique @db.VarChar
   password String    @db.VarChar
   Contact  Contact[]
   Import   Import[]

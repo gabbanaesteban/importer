@@ -18,7 +18,7 @@ const dateSchema = z.preprocess((value) => parseDate(value as string), z.date())
   ]);
 
 export const contactSchema = z.object({
-  name: z.string().nonempty(),// TODO add regex for name: only - and letters
+  name: z.string().nonempty().regex(/^[A-Za-z-]+$/),
   date_of_birth: dateSchema,
   phone: phoneSchema,
   address: z.string().nonempty(),

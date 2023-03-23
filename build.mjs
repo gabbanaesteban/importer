@@ -13,7 +13,7 @@ await esbuild.build({
     copy({
       resolveFrom: 'cwd',
       assets: {
-        from: ['src/views/*'],
+        from: ['src/views/**/*'],
         to: ['dist/views'],
       },
     }),

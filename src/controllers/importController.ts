@@ -5,7 +5,7 @@ import { IMPORT_SERVICE } from "../IoC/types"
 import { importMappingSchema } from "../schemas/importSchemas"
 import { validateParams } from "../utils/helpers"
 import { ImportService } from "../services/ImportService"
-import { importMappingType } from "../types"
+import { ImportMappingType } from "../types"
 
 // export async function importView(req: Request, res: Response) {
 //   res.render("import")
@@ -14,7 +14,7 @@ import { importMappingType } from "../types"
 export async function importFile(req: Request, res: Response) {
   const file = req.file as Express.Multer.File
     // TODO: Use mapping to process file
-  const mapping = {} as importMappingType //validateParams(, importMappingSchema)
+  const mapping = {} as ImportMappingType //validateParams(, importMappingSchema)
   const importService = container.get<ImportService>(IMPORT_SERVICE)
 
   await importService.scheduleImportFile(file, mapping)

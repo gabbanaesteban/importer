@@ -1,12 +1,9 @@
-import { Import, User } from "@prisma/client"
-import { importMappingType, ImportStatus } from "../types"
-import csv from "csv-parser"
-import { createReadStream } from "fs"
+import { User } from "@prisma/client"
+import { ImportMappingType, ImportStatus } from "../types"
 import { inject, injectable } from "inversify"
 import { CURRENT_USER } from "../IoC/types"
 import prisma from "../db"
-import { contactSchema } from "../schemas/importSchemas"
-import ImporterWorker from "./importerWorker"
+import { importerQueue } from "../tasks/queue"
 
 @injectable()
 export class ImportService {
@@ -16,7 +13,7 @@ export class ImportService {
     this.user = user
   }
 
-  async scheduleImportFile(file: Express.Multer.File, mapping: importMappingType) {
+  async scheduleImportFile(file: Express.Multer.File, mapping: ImportMappingType) {
     const importedFile = await prisma.import.create({
       data: {
         filePath: file.path,
@@ -27,8 +24,6 @@ export class ImportService {
       },
     })
 
-    // TODO add to queue
-    const importerWorker = new ImporterWorker(importedFile)
-    await importerWorker.processImport()
+    await importerQueue.add(importedFile)
   }
 }

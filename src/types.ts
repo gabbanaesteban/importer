@@ -1,3 +1,4 @@
+import { Import } from "@prisma/client";
 import { z } from "zod";
 import { contactSchema, importMappingSchema } from "./schemas/importSchemas";
 
@@ -8,6 +9,6 @@ export enum ImportStatus {
   FINISHED = 'Finished',
 }
 
-export type importMappingType = z.infer<typeof importMappingSchema>;
+export type ImportMappingType = z.infer<typeof importMappingSchema>;
 
-export type contactPayloadType = z.infer<typeof contactSchema>;
+export type ContactPayloadType = z.infer<typeof contactSchema>;
