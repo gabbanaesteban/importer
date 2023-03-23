@@ -9,18 +9,22 @@
       <thead>
         <tr>
           <th>File</th>
-          <th>Success</th>
+          <th>Status</th>
+          <th>Imported at</th>
           <th>Fail</th>
-          <th></th>
+          <th>Logs</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>test_file.csv</td>
-          <td>10,000</td>
-          <td>10</td>
-          <td><a href="/imports/:importId/reports">See reports</a></td>
-        </tr>
+        {{#each data.imports}}
+          <tr>
+            <td>{{ originalName }}</td>
+            <td>{{ status }}</td>
+            <td>{{formatDate createdAt }}</td>
+            <td>{{ _count.Log }}</td>
+            <td><a href="/logs?importId={{ id }}">Check logs</a></td>
+          </tr>
+        {{/each}}
       </tbody>
     </table>
   </div>

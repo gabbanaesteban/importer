@@ -4,9 +4,9 @@ import { ContactPayloadType, ImportStatus } from "../types"
 import csv from "csv-parser"
 import { createReadStream } from "fs"
 import prisma from "../db"
-import { contactSchema } from "../schemas/importSchemas"
+import { contactSchema } from "../schemas/schemas"
 import creditCardType from "credit-card-type"
-import { encrypt } from "../utils/crypto"
+import { encrypt } from "../helpers/crypto"
 
 export default class ImporterService {
   private importedFile: Import
@@ -34,8 +34,8 @@ export default class ImporterService {
       data: { status: ImportStatus.PROCESSING },
     })
 
-    // Lets wait for 5 seconds to simulate a long running job
-    await setTimeout(5000)
+    // Lets wait for 3 seconds to simulate a long running job
+    await setTimeout(3000)
 
     await this.processFile()
 
@@ -53,15 +53,7 @@ export default class ImporterService {
   }
 
   async processFile() {
-    // TODO: Use mapping to process file
-    const mapping = {
-      Name: "name",
-      "Date of Birth": "date_of_birth",
-      Phone: "phone",
-      Address: "address",
-      "Credit Card Number": "credit_card_number",
-      Email: "email",
-    } as Record<string, string>
+    const mapping = this.importedFile.mapping as Record<string, string>
 
     const mapHeaders = (params: { header: string }) => {
       const { header } = params
@@ -161,5 +153,12 @@ export default class ImporterService {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  static markImportAsFailed(importId: number) {
+    return prisma.import.update({
+      where: { id: importId },
+      data: { status: ImportStatus.FAILED },
+    })
   }
 }

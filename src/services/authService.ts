@@ -1,4 +1,4 @@
-import { comparePassword, hashPassword } from "../utils/helpers"
+import { comparePassword, hashPassword } from "../helpers/utils"
 import { NotFound, Unauthorized, Conflict } from "http-errors"
 import { injectable } from "inversify"
 import prisma from "../db"

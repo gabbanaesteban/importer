@@ -13,16 +13,17 @@ const options = {
 export const importerQueue = new Queue<Import>('importerQueue', options);
 
 importerQueue.process(async (job: Job<Import>) => {
-  // Lets wait for 5 seconds to simulate a long running job
-  await setTimeout(5000);
+  // Lets wait for 3 seconds to simulate a long running job
+  await setTimeout(3000);
   const importerService = new ImporterService(job.data);
   await importerService.processImport();
 });
 
-importerQueue.on('completed', (job: Job<Import>, result: any) => {
+importerQueue.on('completed', (job: Job<Import>) => {
   console.log(`Job ${job.id} has been completed`);
 });
 
-importerQueue.on('failed', (job: Job<Import>, err: Error) => {
-  console.log(`Job ${job.id} has failed with error ${err}`);
+importerQueue.on('failed', async (job: Job<Import>, err: Error) => {
+  console.log(`Job ${job.id} has failed with error ${err}`, { import: job.data });
+  await ImporterService.markImportAsFailed(job.data.id);
 });

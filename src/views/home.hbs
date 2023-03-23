@@ -18,15 +18,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Esteban</td>
-          <td>esteban@email.com</td>
-          <td>Jan 10, 1995</td>
-          <td>+1 (000) 123-4567</td>
-          <td>NORTH 123, Street St. No. 123, 111-333333, FL, US</td>
-          <td>**** **** **** 1234</td>
-          <td>Visa</td>
-        </tr>
+        {{#each data.contacts}}
+          <tr>
+            <td>{{ name }}</td>
+            <td><a href="mailto:{{ email }}">{{ email }}</a></td>
+            <td>{{formatDate dateOfBirth }}</td>
+            <td><a href="tel:{{ phone }}">{{ phone }}</a></td>
+            <td>{{ address }}</td>
+            <td>**** **** **** {{ creditCardLast4 }}</td>
+            <td>{{ creditCardNetwork }}</td>
+          </tr>
+        {{/each}}
       </tbody>
     </table>
   </div>

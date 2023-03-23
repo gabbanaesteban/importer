@@ -1,7 +1,71 @@
 <form action="/import" method="post" enctype="multipart/form-data">
   <div class="mb-3">
     <label class="form-label" for="contact-files-import">Select file to import:</label>
-    <input id="contact-files-import" name="file" class="form-control form-control-lg" type="file">
+    <input id="contact-files-import" name="file" class="form-control form-control-lg" type="file" required />
   </div>
-  <button class="btn btn-primary" type="submit">Import</button>
+
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="name" name="name" value="name" placeholder="Name" />
+        <label for="name">Name</label>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="date_of_birth"
+          name="date_of_birth"
+          value="dob"
+          placeholder="Date of Birth"
+        />
+        <label for="date_of_birth">Date of Birth</label>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="phone" name="phone" value="phone" placeholder="Phone" />
+        <label for="phone">Phone</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="address" name="address" value="address" placeholder="Address" />
+        <label for="address">Address</label>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="form-floating">
+        <input
+          type="text"
+          class="form-control"
+          id="credit_card_number"
+          name="credit_card_number"
+          value="cc_number"
+          placeholder="Credit Card Number"
+        />
+        <label for="credit_card_number">Credit Card Number</label>
+      </div>
+    </div>
+    <div class="col-md-4 mb-3">
+      <div class="form-floating">
+        <input type="text" class="form-control" id="email" name="email" value="email" placeholder="Email" />
+        <label for="email">Email</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 mb-3">
+      <div class="text-end">
+        <button class="btn btn-primary" type="submit">Import</button>
+      </div>
+    </div>
+  </div>
+
 </form>

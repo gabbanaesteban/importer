@@ -1,12 +1,12 @@
-Name,Date of Birth,Phone,Address,Credit Card Number,Email
-,1996-06-25,(+01) 829-978-64-18,Missing Name St,371449635398431,gabbanaesteban@koombea.com
-Esteban Jose,1996-06-25,(+01) 829-978-64-18,Invalid Name St,371449635398431,gabbanaesteban@koombea.com
-Esteban,,(+01) 829-978-64-18,Missing DOB St,371449635398431,gabbanaesteban@koombea.com
-Esteban,1996-06-25,,Missing Phone St,371449635398431,gabbanaesteban@koombea.com
+name,dob,phone,address,cc_number,email
+,1996-06-25,(+01) 829-978-64-18,Name St,371449635398431,gabbanaesteban@koombea.com
+Esteban Jose,1996-06-25,(+01) 829-978-64-18,Name St,371449635398431,gabbanaesteban@koombea.com
+Esteban,,(+01) 829-978-64-18,DOB St,371449635398431,gabbanaesteban@koombea.com
+Esteban,1996-06-25,,Phone St,371449635398431,gabbanaesteban@koombea.com
 Esteban,1996-06-25,(+01) 829-978-64-18,,371449635398431,gabbanaesteban@koombea.com
-Esteban,1996-06-25,(+01) 829-978-64-18,Missing Credit Card St,,gabbanaesteban@koombea.com
-Esteban,1996-06-25,(+01) 829-978-64-18,Missing Email St,371449635398431,
-Carlos,02-02-13,(+01) 829 189 75 29,Invalid DOB St,30569309025904,carlos@koombea.com
-Carlos,19900730,+018291897529,Invalid Phone St,30569309025904,carlos@koombea.com
-Carlos,19900730,(+01) 829 189 75 29,Invalid Credit Card St,252,carlos@koombea.com
-Carlos,19900730,(+01) 829 189 75 29,Invalid Email St,30569309025904,carlos
+Esteban,1996-06-25,(+01) 829-978-64-18,Credit Card St,,gabbanaesteban@koombea.com
+Esteban,1996-06-25,(+01) 829-978-64-18,Email St,371449635398431,
+Carlos,02-02-13,(+01) 829 189 75 29,DOB St,30569309025904,carlos@koombea.com
+Carlos,19900730,+018291897529,Phone St,30569309025904,carlos@koombea.com
+Carlos,19900730,(+01) 829 189 75 29,Credit Card St,252,carlos@koombea.com
+Carlos,19900730,(+01) 829 189 75 29,Email St,30569309025904,carlos

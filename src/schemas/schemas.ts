@@ -1,5 +1,10 @@
-import { parseDate } from "../utils/helpers";
 import z from "zod"
+import { parseDate } from "../helpers/utils";
+
+export const authSchema = z.object({
+  username: z.string().nonempty(),
+  password: z.string().nonempty(),
+})
 
 export const importMappingSchema = z.object({
   name: z.string().nonempty(),
@@ -24,4 +29,10 @@ export const contactSchema = z.object({
   address: z.string().nonempty(),
   credit_card_number: z.string().regex(/^\d{13,19}$/),
   email: z.string().email(),
+})
+
+const limitSchema = z.preprocess((value) => parseInt(z.string().default('100').parse(value), 10), z.number().min(1).max(100));
+
+export const listLogsSchema = z.object({
+  importId: z.preprocess((value) => parseInt(z.string().parse(value), 10), z.number().min(1)).optional(),
 })

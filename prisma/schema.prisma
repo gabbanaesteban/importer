@@ -28,6 +28,7 @@ model Contact {
 model Import {
   id           Int      @id @default(autoincrement())
   filePath     String   @db.VarChar
+  originalName String   @db.VarChar
   mapping      Json     @db.Json
   status       String   @db.VarChar
   userId       Int

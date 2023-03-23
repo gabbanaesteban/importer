@@ -1,6 +1,6 @@
 import { Import } from "@prisma/client";
 import { z } from "zod";
-import { contactSchema, importMappingSchema } from "./schemas/importSchemas";
+import { contactSchema, importMappingSchema } from "./schemas/schemas";
 
 export enum ImportStatus {
   ON_HOLD = 'On Hold',

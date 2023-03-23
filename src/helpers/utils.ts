@@ -23,10 +23,17 @@ export const validateParams = (data: unknown, schema: ZodType<any, ZodTypeDef, a
   throw new BadRequest(`Validation Error - ${error.path.join('.')}: ${error.message}`);
 };
 
-export function parseDate(dateString: string): Date | undefined {
-  const onlyNumbers = dateString.replace(/[^0-9]/g, '');
+export function swapObjectProps(obj: Record<string, string | number>) {
+  return Object.entries(obj).reduce((acc, [key, value]) => {
+    acc[value] = key;
+    return acc;
+  }, {} as Record<string, string | number>);
+}
 
-  if (onlyNumbers.length !== 8) {
+export function parseDate(dateString: string): Date | undefined {
+  const onlyNumbers = dateString?.replace(/[^0-9]/g, '');
+
+  if (onlyNumbers?.length !== 8) {
     return undefined;
   }
   

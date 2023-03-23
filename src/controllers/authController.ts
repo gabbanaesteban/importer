@@ -1,5 +1,5 @@
-import { authSchema } from "../schemas/authSchemas"
-import { validateParams } from "../utils/helpers"
+import { authSchema } from "../schemas/schemas"
+import { validateParams } from "../helpers/utils"
 import { Request, Response } from "express"
 import container from "../IoC/inversify.config"
 import { AuthService } from "../services/AuthService"
