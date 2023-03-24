@@ -1,16 +1,11 @@
 import { Import } from '@prisma/client';
-import Queue, { Job } from 'bull';
+import container from '../IoC/inversify.config';
+import Bull, { Job } from 'bull';
 import { setTimeout } from 'timers/promises';
 import ImporterService from '../services/ImporterService';
+import { IMPORTER_QUEUE } from '../IoC/types';
 
-const options = {
-  redis: {
-    port: 6379,
-    host: '127.0.0.1'
-  }
-};
-
-export const importerQueue = new Queue<Import>('importerQueue', options);
+const importerQueue = container.get<Bull.Queue<Import>>(IMPORTER_QUEUE)
 
 importerQueue.process(async (job: Job<Import>) => {
   // Lets wait for 3 seconds to simulate a long running job

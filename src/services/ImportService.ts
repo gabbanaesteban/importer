@@ -1,17 +1,19 @@
-import { User } from "@prisma/client"
+import { Import, User } from "@prisma/client"
 import { ImportMappingType, ImportStatus } from "../types"
 import { inject, injectable } from "inversify"
-import { CURRENT_USER } from "../IoC/types"
+import { CURRENT_USER, IMPORTER_QUEUE } from "../IoC/types"
 import prisma from "../db"
-import { importerQueue } from "../tasks/queue"
 import { swapObjectProps } from "../helpers/utils"
+import Bull from "bull"
 
 @injectable()
 export class ImportService {
   private user: User
+  private queue: Bull.Queue<Import>
 
-  constructor(@inject(CURRENT_USER) user: User) {
+  constructor(@inject(CURRENT_USER) user: User, @inject(IMPORTER_QUEUE) queue: Bull.Queue<Import>) {
     this.user = user
+    this.queue = queue
   }
 
   async listImports() {
@@ -37,6 +39,6 @@ export class ImportService {
       },
     })
 
-    await importerQueue.add(importedFile)
+    await this.queue.add(importedFile)
   }
 }

@@ -31,6 +31,7 @@ export const contactSchema = z.object({
   email: z.string().email(),
 })
 
+// pagination
 const limitSchema = z.preprocess((value) => parseInt(z.string().default('100').parse(value), 10), z.number().min(1).max(100));
 
 export const listLogsSchema = z.object({

@@ -4,3 +4,4 @@ export const AUTH_SERVICE = Symbol.for('AuthService');
 export const IMPORT_SERVICE = Symbol.for('ImportService');
 export const CONTACTS_SERVICE = Symbol.for('ContactsService');
 export const LOGS_SERVICE = Symbol.for('LogsService');
+export const IMPORTER_QUEUE = Symbol.for('ImporterQueue');

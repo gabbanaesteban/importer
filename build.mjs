@@ -2,9 +2,9 @@ import * as esbuild from 'esbuild'
 import { copy } from 'esbuild-plugin-copy';
 
 await esbuild.build({
-  entryPoints: ['src/app.ts'],
   bundle: true,
-  outfile: 'dist/app.js',
+  entryPoints: ['src/app.ts', 'src/tasks/consumer.ts'],
+  outdir: 'dist',
   platform: 'node',
   target: 'node18',
   packages: 'external',

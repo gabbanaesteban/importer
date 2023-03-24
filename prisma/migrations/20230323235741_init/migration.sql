@@ -6,7 +6,8 @@ CREATE TABLE "Contact" (
     "phone" VARCHAR NOT NULL,
     "address" VARCHAR NOT NULL,
     "creditCardNumber" VARCHAR NOT NULL,
-    "credirCardNetwork" VARCHAR NOT NULL,
+    "creditCardNetwork" VARCHAR NOT NULL,
+    "creditCardLast4" VARCHAR NOT NULL,
     "email" VARCHAR NOT NULL,
     "createdAt" TIMESTAMP(6) NOT NULL,
     "updatedAt" TIMESTAMP(6) NOT NULL,
@@ -19,10 +20,11 @@ CREATE TABLE "Contact" (
 CREATE TABLE "Import" (
     "id" SERIAL NOT NULL,
     "filePath" VARCHAR NOT NULL,
+    "originalName" VARCHAR NOT NULL,
     "mapping" JSON NOT NULL,
     "status" VARCHAR NOT NULL,
-    "createdAt" TIMESTAMP(6) NOT NULL,
     "userId" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(6) NOT NULL,
 
     CONSTRAINT "Import_pkey" PRIMARY KEY ("id")
 );
@@ -66,4 +68,3 @@ ALTER TABLE "Log" ADD CONSTRAINT "Log_importId_fkey" FOREIGN KEY ("importId") RE
 
 -- AddForeignKey
 ALTER TABLE "Log" ADD CONSTRAINT "Log_ownerId_fkey" FOREIGN KEY ("ownerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
