@@ -37,10 +37,10 @@ npm run start-consumer # This command runs the worker
 
 | Files | Result |
 | -------- | -------- |
-| [failed.csv](samples/failed.csv.md) | Failed |
-| [mixed.csv](samples/mixed.csv.md) | Finished |
-| [success.csv](samples/success.csv.md) | Finished |
-| [different_mapping.csv](samples/different_mapping.csv.md) | Finished |
+| [failed.csv](samples/failed.csv) | Failed |
+| [mixed.csv](samples/mixed.csv) | Finished |
+| [success.csv](samples/success.csv) | Finished |
+| [different_mapping.csv](samples/different_mapping.csv) | Finished |
 
 All but `different_mapping.csv` use the same mapping and it is hardcoded in the **Import** form for the sake of simplicity. In order to use a different mapping, just fill out the form with the correct headers.
 
