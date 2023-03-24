@@ -20,16 +20,27 @@
       <tbody>
         {{#each data.contacts}}
           <tr>
-            <td>{{ name }}</td>
-            <td><a href="mailto:{{ email }}">{{ email }}</a></td>
-            <td>{{formatDate dateOfBirth }}</td>
-            <td><a href="tel:{{ phone }}">{{ phone }}</a></td>
-            <td>{{ address }}</td>
-            <td>**** **** **** {{ creditCardLast4 }}</td>
-            <td>{{ creditCardNetwork }}</td>
+            <td>{{name}}</td>
+            <td><a href="mailto:{{email}}">{{email}}</a></td>
+            <td>{{formatDate dateOfBirth}}</td>
+            <td><a href="tel:{{phone}}">{{phone}}</a></td>
+            <td>{{address}}</td>
+            <td>**** **** **** {{creditCardLast4}} hehe</td>
+            <td>{{creditCardNetwork}}</td>
           </tr>
         {{/each}}
       </tbody>
     </table>
   </div>
+
+<div>
+  <ul class="pagination justify-content-end">
+      <li class="page-item {{#unless data.pagination.prevPage}} disabled {{/unless}}">
+        <a class="page-link" href="?limit={{data.pagination.limit}}&page={{data.pagination.prevPage}}">Previous</a>
+      </li>
+      <li class="page-item {{#unless data.pagination.nextPage}} disabled {{/unless}}">
+        <a class="page-link" href="?limit={{data.pagination.limit}}&page={{data.pagination.nextPage}}">Next</a>
+      </li>
+    </ul>
+</div>
 </main>

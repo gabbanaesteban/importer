@@ -1,6 +1,10 @@
 import { parse } from "date-fns";
 import z from "zod"
 
+// pagination
+const limitSchema = z.preprocess((value) => parseInt(z.string().default('5').parse(value), 10), z.number().min(1).max(100));
+const pageSchema = z.preprocess((value) => parseInt(z.string().default('1').parse(value), 10), z.number().min(1));
+
 export const authSchema = z.object({
   username: z.string().nonempty(),
   password: z.string().nonempty(),
@@ -34,9 +38,13 @@ export const contactSchema = z.object({
   email: z.string().email(),
 })
 
-// pagination
-const limitSchema = z.preprocess((value) => parseInt(z.string().default('100').parse(value), 10), z.number().min(1).max(100));
-
 export const listLogsSchema = z.object({
   importId: z.preprocess((value) => parseInt(z.string().parse(value), 10), z.number().min(1)).optional(),
+  limit: limitSchema,
+  page: pageSchema,
+})
+
+export const listContactsSchema = z.object({
+  limit: limitSchema,
+  page: pageSchema,
 })

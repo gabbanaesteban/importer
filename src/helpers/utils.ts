@@ -1,3 +1,4 @@
+import { PaginationParams } from "../types"
 import bcrypt from "bcrypt"
 import { BadRequest } from "http-errors"
 import { z, ZodType, ZodTypeDef } from "zod"
@@ -28,4 +29,22 @@ export function swapObjectProps(obj: Record<string, string | number>) {
     acc[value] = key
     return acc
   }, {} as Record<string, string | number>)
+}
+
+export function composePaginationParams(page: number, limit: number): PaginationParams {
+  return {
+    skip: (page - 1) * limit,
+    take: limit + 1,
+  }
+}
+
+export function paginateResults<T>(results: T[], page:number, limit: number) {
+  const hasMore = results.length > limit
+  const items = hasMore ? results.slice(0, -1) : results
+  return { 
+    items,
+    nextPage: hasMore ? page + 1 : null,
+    prevPage: page > 1 ? page - 1 : null,
+    limit,
+  }
 }
