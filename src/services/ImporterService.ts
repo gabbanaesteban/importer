@@ -1,4 +1,4 @@
-import { setTimeout } from 'timers/promises';
+import { setTimeout } from "timers/promises"
 import { Import } from "@prisma/client"
 import { ContactPayloadType, ImportStatus } from "../types"
 import csv from "csv-parser"
@@ -50,6 +50,8 @@ export default class ImporterService {
   }
 
   async processFile() {
+    const promises: Promise<void>[] = []
+
     const mapping = this.importedFile.mapping as Record<string, string>
 
     const mapHeaders = (params: { header: string }) => {
@@ -59,32 +61,22 @@ export default class ImporterService {
 
     const parser = csv({ mapHeaders })
 
-    await new Promise<void>((resolve, reject) => {
-      let rowNumber = 1 // The number of the row, in order to look for failed contacts in the file
-      let rowsLoadedCount = 0
-      let rowsProcessedCount = 0
+    // The number of the row, in order to look for failed contacts in the file
+    let rowNumber = 1 
 
-      const readStream = createReadStream(this.importedFile.filePath)
-
-      readStream.on("error", (error) => {
-        reject(error)
-      })
-
-      readStream.pipe(parser).on("data", async (row) => {
+    await new Promise((resolve, reject) => {
+      createReadStream(this.importedFile.filePath)
+      .pipe(parser)
+      .on("data", async (row) => {
         rowNumber++
-
-        // I need to know when all rows are processed
-        // This is a bit hacky, but Im running out of time
-        // Could be improved
-        rowsLoadedCount++
-        await this.processRow(row, rowNumber)
-        rowsProcessedCount++
-
-        if (rowsLoadedCount === rowsProcessedCount) {
-          resolve()
-        }
-      })
+        promises.push(this.processRow(row, rowNumber))
+      }).on("error", (err) => {
+        reject(err)
+      }).on("end", () => resolve(undefined))
     })
+    
+
+      await Promise.allSettled(promises)
   }
 
   async processRow(row: Record<string, string>, rowNumber: number) {

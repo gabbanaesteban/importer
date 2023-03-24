@@ -35,7 +35,8 @@ describe("ImportService test suite", () => {
 
       prismaMock.import.findFirst.mockResolvedValueOnce(importedFile)
       prismaMock.import.update.mockResolvedValue(importedFile)
-      const processFileSpy = jest.spyOn(ImporterService.prototype, "processFile").mockResolvedValueOnce()
+      const processFileSpy = jest.spyOn(ImporterService.prototype, "processFile")
+        .mockResolvedValueOnce()
 
       const importerService = new ImporterService(importedFile)
       await importerService.processImport()
@@ -229,9 +230,6 @@ describe("ImportService test suite", () => {
         .mockResolvedValue()
 
       await importerService.processFile()
-
-      // Mimic the delay of the connection to the database
-      await setTimeout(100)
 
       expect(processRowSpy).toHaveBeenCalledTimes(2)
       expect(createLogForInvalidContactSpy).toHaveBeenCalledTimes(1)
