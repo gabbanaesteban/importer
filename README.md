@@ -1,4 +1,6 @@
 # Contact Importer
+[![Tests](https://github.com/gabbanaesteban/importer/actions/workflows/tests.yml/badge.svg)](https://github.com/gabbanaesteban/importer/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/gabbanaesteban/importer/branch/main/graph/badge.svg?token=Lwe9CQfCsr)](https://codecov.io/gh/gabbanaesteban/importer)
 
 Simple project to import contacts from a CSV file.
 
