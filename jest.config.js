@@ -6,7 +6,7 @@ module.exports = {
     '@tests/(.*)$': '<rootDir>/tests/$1',
   },
   modulePathIgnorePatterns: [
-    '<rootDir>/dist/', 'node_modules', '<rootDir>/src/tasks/'
+    '<rootDir>/dist/', 'node_modules',
   ],
   transform: {
     '^.+\\.ts$': ['ts-jest', {

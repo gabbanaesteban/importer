@@ -34,9 +34,6 @@ export default class ImporterService {
       data: { status: ImportStatus.PROCESSING },
     })
 
-    // Lets wait for 3 seconds to simulate a long running job
-    await setTimeout(3000)
-
     await this.processFile()
 
     if (this.failedRowsCount > 0 && this.successRowsCount === 0) {
