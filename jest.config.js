@@ -1,5 +1,4 @@
 module.exports = {
-  preset: 'ts-jest',
   testEnvironment: 'node',
   setupFiles: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
@@ -9,11 +8,11 @@ module.exports = {
   modulePathIgnorePatterns: [
     '<rootDir>/dist/', 'node_modules',
   ],
-  // transform: {
-  //   '^.+\\.ts$': ['ts-jest', {
-  //     diagnostics: false,
-  //     isolatedModules: true,
-  //   }],
-  // },
+  transform: {
+    '^.+\\.ts$': ['ts-jest', {
+      diagnostics: false,
+      isolatedModules: true,
+    }],
+  },
 };
 

@@ -1,0 +1,43 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=importer
+      # - DATABASE_URL="postgresql://postgres:postgres@postgres:5432/importer"
+    volumes:
+    - .:/app
+    - ../linux_node_modules/:/app/node_modules
+    command: sh -c "npx prisma migrate dev && npm run start"
+    depends_on:
+      - redis
+      - postgres
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=importer
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:
