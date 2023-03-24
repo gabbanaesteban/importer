@@ -1,6 +1,6 @@
 // /* eslint-disable import/no-cycle */
 import '@abraham/reflection';
-import { Import, PrismaClient, User } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 import { Container } from 'inversify';
 import { ImportService } from '../services/ImportService';
 import { AuthService } from '../services/AuthService';
