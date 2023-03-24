@@ -1,5 +1,5 @@
+import { parse } from "date-fns";
 import z from "zod"
-import { parseDate } from "../helpers/utils";
 
 export const authSchema = z.object({
   username: z.string().nonempty(),
@@ -15,13 +15,17 @@ export const importMappingSchema = z.object({
   email: z.string().nonempty(),
 })
 
-const dateSchema = z.preprocess((value) => parseDate(value as string), z.date());
+const dateSchema = z.preprocess((val) => {
+  const date = z.string().parse(val).replace(/[^0-9]/g, "")
+  return parse(date, "yyyyMMdd", new Date())
+}, z.date())
 
   const phoneSchema = z.union([
     z.string().regex(/^\(\+\d{2}\)\s\d{3}\s\d{3}\s\d{2}\s\d{2}$/), // matches (+00) 000 000 00 00 00 format
     z.string().regex(/^\(\+\d{2}\)\s\d{3}-\d{3}-\d{2}-\d{2}$/), // matches (+00) 000-000-00-00 format
   ]);
 
+  // TODO: test this
 export const contactSchema = z.object({
   name: z.string().nonempty().regex(/^[A-Za-z-]+$/),
   date_of_birth: dateSchema,

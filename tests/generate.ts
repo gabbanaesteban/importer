@@ -1,5 +1,5 @@
-import { Contact, Import, User } from "@prisma/client";
-import { ImportStatus } from "@src/types";
+import { Contact, Import, Log, User } from "@prisma/client"
+import { ImportStatus } from "@src/types"
 
 export function buildUser(userData: Partial<User> = {}): User {
   return {
@@ -7,7 +7,7 @@ export function buildUser(userData: Partial<User> = {}): User {
     username: "user",
     password: "password",
     ...userData,
-  };
+  }
 }
 
 export function buildContact(contactData: Partial<Contact> = {}): Contact {
@@ -25,7 +25,20 @@ export function buildContact(contactData: Partial<Contact> = {}): Contact {
     updatedAt: new Date(),
     ownerId: 1,
     ...contactData,
-  };
+  }
+}
+
+export function buildLog(logData: Partial<Log> = {}): Log {
+  return {
+    id: 1,
+    importId: 1,
+    ownerId: 1,
+    rowData: { foo: "bar" },
+    rowNumber: 5,
+    error: "Error",
+    createdAt: new Date(),
+    ...logData,
+  }
 }
 
 export function buildImport(importData: Partial<Import> = {}): Import {
@@ -38,7 +51,7 @@ export function buildImport(importData: Partial<Import> = {}): Import {
     userId: 1,
     mapping: {},
     ...importData,
-  };
+  }
 }
 
 export function buildFile(fileData: Partial<Express.Multer.File> = {}): Express.Multer.File {
@@ -46,5 +59,5 @@ export function buildFile(fileData: Partial<Express.Multer.File> = {}): Express.
     originalname: "mixed.csv",
     path: "/tmp/123456789.csv",
     ...fileData,
-  } as Express.Multer.File;
+  } as Express.Multer.File
 }

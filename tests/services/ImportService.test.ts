@@ -11,11 +11,12 @@ import { ImportMappingType, ImportStatus } from "@src/types"
 
 describe("ImportService test suite", () => {
   describe("#listImports", () => {
-    it.only("should return a list of imports", async () => {
+    it("should return a list of imports", async () => {
       const user = buildUser({ id: 45 })
       const importedFile = buildImport({ userId: user.id })
 
       container.rebind<User>(CURRENT_USER).toConstantValue(user)
+      container.rebind<Bull.Queue<Import>>(IMPORTER_QUEUE).toConstantValue(mockDeep<Bull.Queue<Import>>())
 
       prismaMock.import.findMany.mockResolvedValueOnce([importedFile])
 
