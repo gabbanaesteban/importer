@@ -25,7 +25,6 @@ const dateSchema = z.preprocess((val) => {
     z.string().regex(/^\(\+\d{2}\)\s\d{3}-\d{3}-\d{2}-\d{2}$/), // matches (+00) 000-000-00-00 format
   ]);
 
-  // TODO: test this
 export const contactSchema = z.object({
   name: z.string().nonempty().regex(/^[A-Za-z-]+$/),
   date_of_birth: dateSchema,

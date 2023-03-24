@@ -155,6 +155,14 @@ export default class ImporterService {
     }
   }
 
+  getFailedRowsCount() {
+    return this.failedRowsCount
+  }
+
+  getSuccessRowsCount() {
+    return this.successRowsCount
+  }
+
   static markImportAsFailed(importId: number) {
     return prisma.import.update({
       where: { id: importId },

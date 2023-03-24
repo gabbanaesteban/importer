@@ -28,6 +28,18 @@ export function buildContact(contactData: Partial<Contact> = {}): Contact {
   }
 }
 
+export function buildRawContact(data: any = {}) {
+  return {
+    name: "John-Doe",
+    date_of_birth: "1990-01-01",
+    phone: "(+01) 555-123-45-67",
+    address: "123 Main St",
+    credit_card_number: "4111111111111111",
+    email: "john.doe@example.com",
+    ...data,
+  }
+}
+
 export function buildLog(logData: Partial<Log> = {}): Log {
   return {
     id: 1,

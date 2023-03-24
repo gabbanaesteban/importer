@@ -29,21 +29,3 @@ export function swapObjectProps(obj: Record<string, string | number>) {
     return acc
   }, {} as Record<string, string | number>)
 }
-
-export function parseDate(dateString: string): Date | undefined {
-  if (typeof dateString !== "string") {
-    return undefined
-  }
-
-  const onlyNumbers = dateString?.replace(/[^0-9]/g, "")
-
-  if (onlyNumbers?.length !== 8) {
-    return undefined
-  }
-
-  const year = Number(onlyNumbers.slice(0, 4))
-  const month = Number(onlyNumbers.slice(4, 6)) - 1 // JavaScript months are 0-11
-  const day = Number(onlyNumbers.slice(6, 8))
-
-  return new Date(year, month, day)
-}

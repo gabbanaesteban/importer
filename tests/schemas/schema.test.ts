@@ -1,16 +1,6 @@
 import { contactSchema } from "@src/schemas/schemas"
+import { buildRawContact } from "@tests/generate"
 
-const buildRawContact = (data: any = {}) => {
-  return {
-    name: "John-Doe",
-    date_of_birth: "1990-01-01",
-    phone: "(+01) 555-123-45-67",
-    address: "123 Main St",
-    credit_card_number: "1234567890123456",
-    email: "john.doe@example.com",
-    ...data,
-  }
-}
 
 describe("contactSchema", () => {
   describe("name", () => {
