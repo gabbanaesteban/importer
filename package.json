@@ -33,7 +33,7 @@
     "express-handlebars": "^7.0.4",
     "express-session": "^1.17.3",
     "hbs": "^4.2.0",
-    "helmet": "^6.0.1",
+    "helmet": "^6.1.5",
     "http-errors": "^2.0.0",
     "inversify": "^6.0.1",
     "mime-types": "^2.1.35",
